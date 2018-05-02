@@ -41,6 +41,10 @@ public class CheckersModel {
 		}
 	}
 
+	/**
+	 * State of board is updated with the move requested
+	 * @param requestedMove - move read from input file
+	 */
 	public void updateBoardWith(Move requestedMove) {
 		board[requestedMove.toRow][requestedMove.toCol] = board[requestedMove.fromRow][requestedMove.fromCol];
 		board[requestedMove.fromRow][requestedMove.fromCol] = EMPTY;
@@ -54,13 +58,6 @@ public class CheckersModel {
 		if(requestedMove.toRow == 0 && board[requestedMove.toRow][requestedMove.toCol] == RED)
 			board[requestedMove.toRow][requestedMove.toCol] = RED_KING;
 	}
-
-
-/**
-	public boolean isLegalMove(int player, String move) {
-		Move requestedMove = translateMove(move);
-		return isLegalMove(player, requestedMove);
-	} **/
 
 	/**
 	 * Helper method. Check if the requested move is possible for the Player.
@@ -79,8 +76,8 @@ public class CheckersModel {
 		} else {
 			if(player == RED) {
 				if(board[requestedMove.fromRow][requestedMove.fromCol] == RED && requestedMove.toRow > requestedMove.fromRow) {
-					
-					return false; 
+
+					return false;
 				}
 				return true;
 			} else {
@@ -89,9 +86,6 @@ public class CheckersModel {
 				return true;
 			}
 		}
-
-
-		
 	}
 
 	/**
@@ -218,7 +212,7 @@ public class CheckersModel {
 				}
 			}
 		}
-		
+
 
 		if(availableMoves.size() == 0)
 			return null;
