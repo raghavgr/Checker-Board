@@ -60,6 +60,7 @@ public class CheckersModel {
 		board[requestedMove.toRow][requestedMove.toCol] = board[requestedMove.fromRow][requestedMove.fromCol];
 		board[requestedMove.fromRow][requestedMove.fromCol] = EMPTY;
 		System.out.println("Math.abs value of the move is: "+ Math.abs(requestedMove.toRow - requestedMove.fromRow));
+		// Remove opponent pieces that are jumped over
 		if(Math.abs(requestedMove.toRow - requestedMove.fromRow) == 2) {
 			System.out.println("2 Row Cleanup in process");
 			int removePieceRow = (requestedMove.fromRow + requestedMove.toRow) / 2;
