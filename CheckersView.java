@@ -2,16 +2,15 @@ package checkers;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class CheckersView extends JPanel implements ActionListener {
+public class CheckersView extends JPanel implements MouseListener {
 
-	JButton nextButton;
-	JButton prevButton;
+	
 	JLabel notification;
 	CheckersModel boardState;
 	ArrayList<Move> requestedMoves;
@@ -22,18 +21,14 @@ public class CheckersView extends JPanel implements ActionListener {
 	int currMove = 0; //start the iteratedMoves for going over requestedMoves at 0
 
 	public CheckersView(ArrayList<Move> requestedMoves) {
-		repaint();
+		addMouseListener(this);
 		JFrame test = new JFrame("Checkers");
 		test.getContentPane().setBackground(Color.decode("#049304"));
 		//test.setLayout(null);
 		test.setTitle("Checkers");
 		test.setSize(600, 400);
 		test.add(this);
-
-		nextButton = new JButton(" Next ");
-		nextButton.addActionListener(this);
-		prevButton = new JButton(" Previous ");
-		prevButton.addActionListener(this);
+		
 
 		this.setBounds(20, 20, 244, 244);
 		//this.setPreferredSize(new Dimension(246, 246));
@@ -48,10 +43,10 @@ public class CheckersView extends JPanel implements ActionListener {
 		test.add(buttonPane);
 		//test.add(prevButton, BorderLayout.EAST);
 		**/
-		test.add(nextButton);
-		test.add(prevButton);
-		nextButton.setBounds(310, 120, 100, 30);
-		prevButton.setBounds(310, 60, 100, 30);
+		//test.add(startGameButton);
+		//test.add(restartButton);
+		//startGameButton.setBounds(310, 120, 100, 30);
+		//restartButton.setBounds(310, 60, 100, 30);
 		
 		notification = new JLabel("First move is by RED", JLabel.CENTER);
 		test.add(notification);
@@ -75,8 +70,7 @@ public class CheckersView extends JPanel implements ActionListener {
 		possibleMoves = boardState.currentPossibleMoves(CheckersModel.RED);
 		System.out.println("possibleMoves count is: " + possibleMoves.length);
 		currRow = -1;
-		nextButton.setEnabled(true);
-		prevButton.setEnabled(false);
+
 		repaint();
 	}
 
@@ -179,13 +173,7 @@ public class CheckersView extends JPanel implements ActionListener {
 		repaint();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		Object src = event.getSource();
-		if (src == nextButton) {
-			checkRequestedMove();
-		}
-	}
+	
 
 	/**
 	 * Draws the checker board in the panel
@@ -240,6 +228,7 @@ public class CheckersView extends JPanel implements ActionListener {
         	}
 
         	if(currRow >= 0) {
+        		System.out.println("green tiles showing next move");
         		g.setColor(Color.white);
         		g.drawRect(2 + currCol*30, 2 + currRow*30, 29, 29);
         		g.drawRect(3 + currCol*30, 3 + currRow*30, 27, 27);
@@ -252,5 +241,38 @@ public class CheckersView extends JPanel implements ActionListener {
         		}
         	}
         }   
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		int col = (e.getX() - 2) / 30;
+        int row = (e.getY() - 2) / 30;
+        System.out.println(row + ", " + col);
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
