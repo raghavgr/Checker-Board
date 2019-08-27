@@ -207,6 +207,7 @@ public class CheckersModel {
 			currPlayerKing = RED_KING;
 		else
 			currPlayerKing = BLACK_KING;
+		
 		ArrayList<Move> availableMoves = new ArrayList<Move>();
 		for(int row = 0; row < 8; row++) {
 			for(int col = 0; col < 8; col++) {
@@ -291,7 +292,6 @@ public class CheckersModel {
 			System.out.println("Current player is: " + players[currPlayer]);
 			for(int i = 0; i < availableMoves.size(); i++) {
 				moves[i] = availableMoves.get(i);
-				
 				System.out.println("Possible Moves: " + moves[i].toString());
 			}
 			return moves;

@@ -13,49 +13,39 @@ public class CheckersView extends JPanel implements MouseListener {
 	
 	JLabel notification;
 	CheckersModel boardState;
-	ArrayList<Move> requestedMoves;
+	//ArrayList<Move> requestedMoves;
 	boolean gameIsHappening;
 	int currPlayer;
 	Move[] possibleMoves;
 	int currRow, currCol;
-	int currMove = 0; //start the iteratedMoves for going over requestedMoves at 0
+	int currMove = 0; //start for going over requestedMoves at 0
 
-	public CheckersView(ArrayList<Move> requestedMoves) {
+	public CheckersView() {
 		addMouseListener(this);
 		JFrame test = new JFrame("Checkers");
-		test.getContentPane().setBackground(Color.decode("#049304"));
+		//test.getContentPane().setBackground();
 		//test.setLayout(null);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 		test.setTitle("Checkers");
-		test.setSize(600, 400);
-		test.add(this);
-		
-
+		test.setSize(400, 400);
+		//this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setBackground(Color.decode("#049304"));
 		this.setBounds(20, 20, 244, 244);
-		//this.setPreferredSize(new Dimension(246, 246));
+
+		mainPanel.add(this);
 		
-		//test.setLayout(new BoxLayout(test.getContentPane(), BoxLayout.X_AXIS));
-		/**
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.Y_AXIS));
-		buttonPane.add(nextButton);
-		buttonPane.add(prevButton);
-		buttonPane.setAlignmentX(RIGHT_ALIGNMENT);
-		test.add(buttonPane);
-		//test.add(prevButton, BorderLayout.EAST);
-		**/
-		//test.add(startGameButton);
-		//test.add(restartButton);
-		//startGameButton.setBounds(310, 120, 100, 30);
-		//restartButton.setBounds(310, 60, 100, 30);
 		
-		notification = new JLabel("First move is by RED", JLabel.CENTER);
-		test.add(notification);
-		notification.setBounds(0, 310, 330, 30);
+		notification = new JLabel("First move is by RED");
+		mainPanel.add(notification);
+		//this.notification.setBounds(20, 370, 330, 30);
+		test.add(mainPanel);
+
 		test.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		test.setVisible(true);
-		this.requestedMoves = requestedMoves;
+		//this.requestedMoves = requestedMoves;
 		boardState = new CheckersModel();
-		System.out.println("in checkers view constructor: " + requestedMoves.size());
+		//System.out.println("in checkers view constructor: " + requestedMoves.size());
 		startGame();
 	}
 
@@ -76,7 +66,7 @@ public class CheckersView extends JPanel implements MouseListener {
 
 	/**
 	 * Checks if the move requested is one of the legal moves or not
-	 */
+	 *
 	public void checkRequestedMove() {
 		boolean isMoveAllowed = false;
 		Move move = null;
@@ -102,7 +92,9 @@ public class CheckersView extends JPanel implements MouseListener {
 		} else {
 			notification.setText("Reached the limit of requested moves");
 		}
-	}
+	}**/
+	
+	
 
 	/**
 	 * Carry out the move once it is verified that it is a legal move.
@@ -236,18 +228,14 @@ public class CheckersView extends JPanel implements MouseListener {
         		for(int i = 0; i < possibleMoves.length; i++) {
         			if(possibleMoves[i].fromRow == currRow && possibleMoves[i].fromCol == currCol) {
         				g.drawRect(2 + possibleMoves[i].toCol*30, 2 + possibleMoves[i].toRow*30, 29, 29);
-        				g.drawRect(3 + possibleMoves[i].toCol*30, 3 + possibleMoves[i].toRow*30, 27, 27);
+        				//g.drawRect(3 + possibleMoves[i].toCol*30, 3 + possibleMoves[i].toRow*30, 27, 27);
         			}
         		}
         	}
         }   
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -255,7 +243,47 @@ public class CheckersView extends JPanel implements MouseListener {
 		int col = (e.getX() - 2) / 30;
         int row = (e.getY() - 2) / 30;
         System.out.println(row + ", " + col);
+        squareClicked(row, col);
 
+	}
+	
+	/**
+	 * Called when mousePressed event happens. 
+	 * Used to highlight the possible moves of the current checker
+	 * piece if there is a piece present on that square.
+	 * @param row
+	 * @param col
+	 */
+	public void squareClicked(int row, int col) {
+		
+		// If the selected row/column has a piece AND
+		// is one of the fromRow and fromCol of the possibleMoves
+		// then update the currRow and currCol and repaint()
+		for (Move move: possibleMoves) {
+			if(move.fromRow == row && move.fromCol == col) {
+				currRow = row;
+				currCol = col;
+				if(currPlayer == CheckersModel.RED)
+					notification.setText("RED: Make your move. ");
+				else
+					notification.setText("BLACK: Make your move. ");
+				repaint();
+				return;
+			}
+		}
+		
+		if(currRow < 0) {
+			notification.setText("Select a piece that you want to move.");
+			return;
+		}
+		
+		for(Move move: possibleMoves) {
+			if(move.fromRow == currRow && move.fromCol == currCol &&
+					move.toRow == row && move.toCol == col) {
+				processMove(move);
+				return;
+			}
+		}
 	}
 
 	@Override
@@ -272,6 +300,12 @@ public class CheckersView extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

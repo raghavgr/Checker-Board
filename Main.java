@@ -7,9 +7,11 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		File file = new File("/Users/grandhis/eclipse-workspace/Assignment-1/src/checkers/moves.txt");
-		Scanner sc = new Scanner(file);
+		//File file = new File("/Users/grandhis/eclipse-workspace/Assignment-1/src/checkers/moves.txt");
+		//Scanner sc = new Scanner(file);
 		//CheckersModel test = new CheckersModel();
+		/**
+		 * Assignment 1, reading moves from txt file.
 		ArrayList<String> moves = new ArrayList<String>();
 	    while (sc.hasNextLine()) {
 	    	String move = sc.nextLine();
@@ -19,7 +21,9 @@ public class Main {
 	    }
 
 	    MovesReader test = new MovesReader(moves);
-
+	    **/
+		
+		CheckersView newGame = new CheckersView();
 	}
 }
 

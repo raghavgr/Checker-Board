@@ -21,7 +21,7 @@ public class MovesReader {
 		for(String move: requestedMoves) {
 			moves.add(this.translateMove(move));
 		}
-		CheckersView checkersPanel = new CheckersView(moves);
+		//CheckersView checkersPanel = new CheckersView(moves);
 	}
 	private Move translateMove(String move) {
 		String[] parts = move.split("-");
